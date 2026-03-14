@@ -30,12 +30,12 @@ while attempts > 0:
 
     # Verificar si el jugador ya adivinó la palabra completa
     if "_" not in progress:
-        print("¡Ganaste!")
+        print(f"¡Ganaste!, tu puntaje fue de {attempts}")
         break
     print(f"Intentos restantes: {attempts}")
     print(f"Letras usadas: {', '.join(guessed)}")
 
-    ### Utilizamos un bucle for para verificar la entrada del ususario
+    ### Utilizamos un bucle while para verificar la entrada del ususario
     while True:
         letter = input("Ingresá una letra: ").lower()
 
@@ -57,4 +57,4 @@ while attempts > 0:
 
     print()
 else:
-    print(f"¡Perdiste! La palabra era: {word}")
+    print(f"¡Perdiste! La palabra era: {word}, tu puntaje fue de: 0")
