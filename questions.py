@@ -3,48 +3,47 @@ import random
 ### Definimos las categorias posibles
 categorias = {
     "programacion": [
-        "python", "programa", "variable", "funcion", 
-        "bucle", "cadena", "entero", "lista"
+        "python",
+        "programa",
+        "variable",
+        "funcion",
+        "bucle",
+        "cadena",
+        "entero",
+        "lista",
     ],
-    "comida": [
-        "fideos", "carne", "tarta", "pizza", "hamburguesa"
-    ],
-    "deportes": [
-        "futbol", "basquet", "tenis", "hockey", "handball"
-    ]
+    "comida": ["fideos", "carne", "tarta", "pizza", "hamburguesa"],
+    "deportes": ["futbol", "basquet", "tenis", "hockey", "handball"],
 }
 
 print("¡Bienvenido al Ahorcado!\n")
 print("Jugaremos 3 rondas.\n")
 
-# Iteramos todo el bcle del juego tres veces
+# CAMBIO 1: Bucle de rondas. Movi la eleccion de categoria aca adentro.
 for ronda in range(1, 4):
-    print(f"\n--- INICIANDO RONDA {ronda} ---")
-    
-    # Seleccion de la categoria de la palabra
+    print(f"--- INICIANDO RONDA {ronda} ---")
+
     while True:
         # Mostramos solo los nombres de las categorias
         print(f"Categorias posibles: {', '.join(categorias)}")
         categoria_elegida = input("Ingrese la categoria a elegir: ").lower()
-        
+
         # Verificamos que la categoria exista y que todavia tenga palabras
         if categoria_elegida in categorias and len(categorias[categoria_elegida]) > 0:
             break
-            
+
         print("Categoria no valida o ya no tiene palabras. Intente de nuevo.\n")
 
-    # Elegimos 1 palabra con random.sample y la borramos de la lista para evitar que se pueda elegir dos veces
+    # Elegimos 1 palabra con random.sample y la borramos de la lista
     word = random.sample(categorias[categoria_elegida], 1)[0]
     categorias[categoria_elegida].remove(word)
 
     print(f"\nCategoria seleccionada: {categoria_elegida}")
     print()
 
-    # Iniciamos los puntajes de la ronda
     guessed = []
     attempts = 6
 
-    # Damos comienzo al juego
     while attempts > 0:
         # Mostrar progreso: letras adivinadas y guiones para las que faltan
         progress = ""
@@ -59,7 +58,7 @@ for ronda in range(1, 4):
         if "_" not in progress:
             print(f"!Ganaste!, tu puntaje fue de {attempts}")
             break
-            
+
         print(f"Intentos restantes: {attempts}")
         print(f"Letras usadas: {', '.join(guessed)}")
 
@@ -85,4 +84,4 @@ for ronda in range(1, 4):
 
         print()
     else:
-        print(f"!Perdiste! La palabra era: {word}, tu puntaje fue de: 0")    
+        print(f"!Perdiste! La palabra era: {word}, tu puntaje fue de: 0")
