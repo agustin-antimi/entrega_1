@@ -1,21 +1,35 @@
 import random
 
-words = [
-    "python",
-    "programa",
-    "variable",
-    "funcion",
-    "bucle",
-    "cadena",
-    "entero",
-    "lista",
-]
+### Definimos las categorias posibles
+categorias = {
+    "programacion": [
+        "python", "programa", "variable", "funcion", 
+        "bucle", "cadena", "entero", "lista"
+    ],
+    "comida": [
+        "fideos", "carne", "tarta", "pizza", "hamburguesa"
+    ],
+    "deportes": [
+        "futbol", "basquet", "tenis", "hockey", "handball"
+    ]
+}
 
-word = random.choice(words)
+print("¡Bienvenido al Ahorcado!\n")
+
+while True:
+    # Mostramos solo los nombres de las categorias
+    print(f"Categorias posibles: {', '.join(categorias)}")
+    categoria_elegida = input("Ingrese la categoria a elegir: ").lower()
+    if categoria_elegida in categorias:
+        break
+    print("La categoria ingresada no existe. Por favor, intente de nuevo.\n")
+
+# Accedemos a las palabras de la lista seleccionada por el usuario
+word = random.choice(categorias[categoria_elegida])
 guessed = []
 attempts = 6
 
-print("¡Bienvenido al Ahorcado!")
+print(f"\nCategoria seleccionada: {categoria_elegida}")
 print()
 
 while attempts > 0:
