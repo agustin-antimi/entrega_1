@@ -19,7 +19,7 @@ categorias = {
 print("¡Bienvenido al Ahorcado!\n")
 print("Jugaremos 3 rondas.\n")
 
-# CAMBIO 1: Bucle de rondas. Movi la eleccion de categoria aca adentro.
+#Bucle de rondas. Movi la eleccion de categoria aca adentro.
 for ronda in range(1, 4):
     print(f"--- INICIANDO RONDA {ronda} ---")
 
