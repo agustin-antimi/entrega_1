@@ -3,27 +3,28 @@ equipos = dict()
 
 # Funcion que imprime la tabla de los equipos por posiciones
 def tabla():
-    # primero ordenamos el diccionario de equipos por puntos
-    posiciones_ordenadas = dict(sorted(equipos.items(), key=lambda item: item[1]))
-    
-    # luego imprimos la tabla
-    print("---TABLA DE POSICIONES---\n   EQUIPO   PUNTOS")
-    for euqipo, puntos in posiciones_ordenadas.items():
-        print(f"\n   {euqipo}   {puntos}")
+    # Ordenamos el diccionario por puntos de mayor a menor (reverse=True)
+    posiciones_ordenadas = dict(sorted(equipos.items(), key=lambda item: item[1], reverse=True))
 
-# Funcion que registra partidos y agrega los puntos a los euqipos    
+    # Luego imprimimos la tabla
+    print("\n---TABLA DE POSICIONES---\n   EQUIPO   PUNTOS")
+    for equipo, puntos in posiciones_ordenadas.items():
+        print(f"   {equipo}   {puntos}")
+    print() # Espacio extra para prolijidad
+
+# Funcion que registra partidos y agrega los puntos a los equipos
 def registrar_partido():
     print("\n--- REGISTRO DE PARTIDO ---")
-    equipo1 = input("Ingrese el nombre del equipo local: ")
-    equipo2 = input("Ingrese el nombre del equipo visitante: ")
+    equipo1 = input("Ingrese el nombre del equipo local: ").lower()
+    equipo2 = input("Ingrese el nombre del equipo visitante: ").lower()
 
     # Validacion: si alguno no esta en la tabla, salimos de la funcion
     if (equipo1 not in equipos) or (equipo2 not in equipos):
         print("Error: Uno o ambos equipos no estan registrados.")
-        return 
+        return
 
-    ## Pedimos los goles y validamos que sean numeros
-    # En caso de no serlo volvemos al bucle
+    # Pedimos los goles y validamos que sean numeros
+    # En caso de no serlo volvemos al bucle principal
     try:
         goles1 = int(input(f"Goles de {equipo1}: "))
         goles2 = int(input(f"Goles de {equipo2}: "))
@@ -46,31 +47,55 @@ def registrar_partido():
         case _:
             print("Datos ingresados incorrectos.")
 
-def agregar_equipo(): 
-    return
-
+def agregar_equipo():
+    equipo_agregar = input("Por favor ingrese el nombre del equipo a agregar: ").lower()
+    if equipo_agregar not in equipos:
+        print(f"Agregando el equipo {equipo_agregar} al torneo.")
+        equipos[equipo_agregar] = 0
+        return
+    print("El equipo ingresado ya esta dentro del torneo.")
 
 def eliminar_equipo():
-    return
+    # Imprimimos los equipos posibles
+    if not equipos:
+        print("No hay equipos registrados aun.")
+        return
+        
+    print("Listado de equipos:")
+    for eq in equipos.keys():
+        print(eq)
 
-def salir():
-    return
+    # Chequeamos que el equipo ingresado este registrado
+    equipo_eliminar = input("Ingrese un equipo a eliminar: ").lower()
+    if equipo_eliminar not in equipos:
+        print("El equipo ingresado no esta en la tabla.")
+        return
+    
+    # En caso de que el equipo este en la tabla lo eliminamos usando del
+    print(f"Eliminando al equipo {equipo_eliminar}.")
+    del equipos[equipo_eliminar]
 
-
-
-
-## Definimos un dict con los comandos posibles
+# Definimos un dict con los comandos posibles
 comandos = {
-    "tabla" : tabla(),
-    "partido" : registrar_partido(),
-    "agregar" : agregar_equipo(),
-    "eliminar" : eliminar_equipo(),
-    "salir" : salir()
-    }
-
+    "tabla": lambda: tabla(),
+    "partido": lambda: registrar_partido(),
+    "agregar": lambda: agregar_equipo(),
+    "eliminar": lambda: eliminar_equipo(),
+}
 
 while True:
-    ## 1 Mostramos la tabla de comandos \
-    print(f"Comandos posibles: {', '.join(comandos).upper()}")
-    comando_ingresado = input("Ingrese uno de los comandos porfavor").lower()
-    comandos[comando_ingresado]
+    # Mostramos la tabla de comandos
+    print(f"Comandos posibles: {', '.join(comandos).upper()}. En caso de querer cerrar la interfaz ingrese SALIR")
+    comando_ingresado = input("Ingrese uno de los comandos por favor: ").lower()
+
+    # Verificamos que el comando ingresado sea correcto
+    if comando_ingresado in comandos:
+        comandos[comando_ingresado]()
+    elif comando_ingresado == "salir":
+        print("\nSaliendo de la interfaz...")
+        break
+    else:
+        print(f"Comando ({comando_ingresado}) no reconocido.")
+
+print("\nPosiciones finales del torneo:")
+tabla()
